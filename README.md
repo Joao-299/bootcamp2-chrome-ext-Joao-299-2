@@ -1,4 +1,4 @@
-# Quick Note - Extensão para Chrome (Manifest V3)
+# Quick Note - Extensão para Chrome 
 
 Projeto desenvolvido para o Desafio de Entrega Inicial do Bootcamp II. Esta é uma extensão simples que permite ao usuário salvar uma anotação de texto diretamente do navegador.
 
