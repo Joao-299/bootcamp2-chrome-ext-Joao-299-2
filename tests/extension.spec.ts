@@ -1,4 +1,4 @@
-import { test, expect, chromium, type BrowserContext } from '@playwright/test';
+import { test, expect, chromium, type BrowserContext, type Page } from '@playwright/test';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -7,12 +7,34 @@ const __dirname = path.dirname(__filename);
 const extensionPath = path.resolve(__dirname, '..', 'dist');
 
 let browserContext: BrowserContext;
+let backgroundPage: Page;
+
+// --- O RADAR INTELIGENTE ---
+// Esta função vai procurar ativamente pela página de background por até 15 segundos.
+async function findBackgroundPage(context: BrowserContext): Promise<Page> {
+    const timeout = 15000; // Tempo máximo de espera: 15 segundos
+    const interval = 500;  // Tentar a cada meio segundo
+    let elapsedTime = 0;
+
+    while (elapsedTime < timeout) {
+        const pages = context.backgroundPages();
+        if (pages.length > 0) {
+            console.log("SUCESSO: Radar encontrou a página de background!");
+            return pages[0];
+        }
+        await new Promise(resolve => setTimeout(resolve, interval));
+        elapsedTime += interval;
+    }
+    throw new Error("FALHA: Radar não encontrou a página de background dentro do tempo limite.");
+}
 
 test.beforeAll(async () => {
     browserContext = await chromium.launchPersistentContext('', {
         headless: true,
         args: [`--disable-extensions-except=${extensionPath}`, `--load-extension=${extensionPath}`],
     });
+    // Usamos o radar para garantir que a página de background está pronta
+    backgroundPage = await findBackgroundPage(browserContext);
 });
 
 test.afterAll(async () => {
@@ -20,9 +42,8 @@ test.afterAll(async () => {
 });
 
 test('deve salvar e carregar uma anotação', async () => {
-    const backgroundPage = browserContext.backgroundPages()[0];
     if (!backgroundPage) {
-        throw new Error("Não foi possível encontrar a página de background da extensão.");
+        throw new Error("Teste abortado: página de background não foi inicializada.");
     }
 
     const extensionId = backgroundPage.url().split('/')[2];
