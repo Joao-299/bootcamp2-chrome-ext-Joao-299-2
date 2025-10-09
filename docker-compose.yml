@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  
+  e2e:
+   
+    build: .
+    
+    shm_size: '2gb'

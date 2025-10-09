@@ -1,0 +1,31 @@
+{
+  "name": "bootcamp2-chrome-ext-joao-299-2",
+  "version": "1.0.0",
+  "description": "Projeto desenvolvido para o Desafio de Entrega Inicial do Bootcamp II. Esta é uma extensão simples que permite ao usuário salvar uma anotação de texto diretamente do navegador.",
+  "main": "index.js",
+  "type": "module",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "build": "node scripts/build-extension.mjs",
+    "test:e2e": "playwright test",
+    "test": "npm run build && npm run test:e2e"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Joao-299/bootcamp2-chrome-ext-Joao-299-2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Joao-299/bootcamp2-chrome-ext-Joao-299-2/issues"
+  },
+  "homepage": "https://github.com/Joao-299/bootcamp2-chrome-ext-Joao-299-2#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.56.0",
+    "@types/node": "^24.7.1",
+    "archiver": "^7.0.1"
+  }
+}
