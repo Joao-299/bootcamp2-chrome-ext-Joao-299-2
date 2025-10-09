@@ -3,13 +3,13 @@ import path from 'node:path';
 import archiver from 'archiver';
 
 const dist = 'dist';
-// Limpa e cria o diretório de distribuição
+
 fs.rmSync(dist, { recursive: true, force: true });
 fs.mkdirSync(dist);
 
 // Copia os arquivos essenciais da extensão
 console.log('Copiando arquivos da extensão...');
-fs.copyFileSync('manifest.json', path.join(dist, 'manifest.json'));
+fs.copyFileSync('manifest.test.json', path.join(dist, 'manifest.json'));
 fs.cpSync('src', path.join(dist, 'src'), { recursive: true });
 fs.cpSync('icons', path.join(dist, 'icons'), { recursive: true });
 console.log('Arquivos copiados para dist/');

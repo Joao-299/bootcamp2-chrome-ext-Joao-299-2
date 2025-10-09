@@ -1,10 +1,12 @@
-FROM mcr.microsoft.com/playwright:v1.46.0-jammy
+FROM node:20-bullseye-slim
 
 WORKDIR /app
 
 COPY package*.json ./
 
 RUN npm ci
+
+RUN npx playwright install --with-deps chromium
 
 COPY . .
 
